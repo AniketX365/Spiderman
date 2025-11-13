@@ -1,0 +1,52 @@
+name: 🚀 Deploy Spider-Man UI to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # Trigger deployment when pushing to main branch
+  workflow_dispatch: # Allow manual trigger from GitHub Actions tab
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: 🔧 Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🧱 Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: 📦 Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: ⚙️ Build Static Site
+        run: |
+          echo "Building static site for Spider-Man UI..."
+          mkdir -p dist
+          cp -r index.html style.css app.js assets dist/
+
+      - name: 📤 Upload Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    name: 🚀 Deploy to GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 🚚 Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4

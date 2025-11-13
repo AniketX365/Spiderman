@@ -1,2 +1,38 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# -------------------------------------------------------------
+# 🕷️ Spider-Man UI Project - Git Attributes
+# Ensures consistent behavior across all contributors and systems
+# -------------------------------------------------------------
+
+# Automatically normalize line endings
+* text=auto eol=lf
+
+# Treat all HTML, CSS, and JS as text
+*.html text
+*.css  text
+*.js   text
+
+# Binary files (images, icons)
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ico  binary
+*.svg  text
+
+# Ignore diffs for minified files
+*.min.js -diff
+*.min.css -diff
+
+# Set linguist language hints for GitHub statistics
+*.html linguist-language=HTML
+*.css  linguist-language=CSS
+*.js   linguist-language=JavaScript
+
+# Markdown and docs
+*.md   text
+*.yml  text
+*.yaml text
+
+# OS-specific files
+.DS_Store binary
+Thumbs.db binary
